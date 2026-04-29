@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>SYSTEM-WIN-VER 官网</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", "Microsoft YaHei";
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0a0f2c, #081a3a, #0f2c55);
+    color: white;
+}
+
+/* ===== 导航栏 ===== */
+.navbar {
+    height: 70px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    background: rgba(10,15,40,0.9);
+    border-bottom: 1px solid rgba(0,140,255,0.2);
+}
+
+.logo {
+    font-size: 20px;
+    color: #4facfe;
+    font-weight: bold;
+}
+
+.navbar ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.navbar li {
+    cursor: pointer;
+}
+
+/* ===== 页面容器（核心） ===== */
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* 真·垂直居中 */
+}
+
+/* ===== 卡片 ===== */
+.card {
+    background: rgba(15,25,60,0.95);
+    padding: 60px;
+    border-radius: 18px;
+    width: 90%;
+    max-width: 720px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0,140,255,0.3);
+}
+
+/* ===== 标题 ===== */
+.card h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.card p {
+    color: #a9c7ff;
+}
+
+/* ===== 按钮 ===== */
+.btn {
+    margin-top: 20px;
+    padding: 16px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#1e90ff,#4facfe);
+    color: white;
+    cursor: pointer;
+}
+
+/* 页面切换 */
+.page { display:none; }
+.active { display:block; }
+
+/* ===== 弹窗 ===== */
+.modal {
+    position: fixed;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content {
+    background:#0f1b3f;
+    padding:25px;
+    border-radius:12px;
+    width:90%;
+    max-width:350px;
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">SYSTEM-WIN-VER</div>
+    <ul>
+        <li onclick="showPage('home')">首页</li>
+        <li onclick="showPage('app')">打开APP</li>
+        <li onclick="showPage('follow')">关注</li>
+        <li onclick="showPage('iso')">ISO</li>
+        <li onclick="openContact()">联系</li>
+    </ul>
+</div>
+
+<div class="main">
+
+<!-- 首页 -->
+<div id="home" class="card page active">
+    <h1>欢迎来到 SYSTEM-WIN-VER</h1>
+    <p>请在导航栏里选择您想要干什么</p>
+</div>
+
+<!-- APP -->
+<div id="app" class="card page">
+    <h1>快速打开</h1>
+    <button class="btn"
+    onclick="window.location.href='https://www.123865.com/s/JK1Bvd-QNIl?notoken=1&pwd=3RkK'">
+    立即前往
+    </button>
+</div>
+
+<!-- ISO -->
+<div id="iso" class="card page">
+    <h1>获取 ISO</h1>
+    <button class="btn"
+    onclick="window.location.href='https://www.123865.com/s/JK1Bvd-UwIl?pwd=wfX0'">
+    前往下载
+    </button>
+</div>
+
+<!-- 关注 -->
+<div id="follow" class="card page">
+    <h1>关注我</h1>
+    <button class="btn" onclick="window.location.href='https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main'">抖音</button>
+    <button class="btn" onclick="window.location.href='https://space.bilibili.com/3546698745907620/upload/video'">哔哩哔哩</button>
+    <button class="btn" onclick="window.location.href='https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH'">快手</button>
+</div>
+
+</div>
+
+<!-- 联系 -->
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+        <h3>联系我</h3>
+        <p>QQ：2353724883</p>
+        <button class="btn"
+        onclick="window.location.href='https://qm.qq.com/q/yXhZBOXgUa'">
+        加QQ群
+        </button>
+        <p style="margin-top:10px;">邮箱：</p>
+        <p>cchyts@qq.com</p>
+        <p>systemwinver@gmail.com</p>
+        <div onclick="closeContact()" style="margin-top:10px;cursor:pointer;color:#4facfe;">关闭</div>
+    </div>
+</div>
+
+<script>
+function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function openContact(){
+    document.getElementById('contactModal').style.display='flex';
+}
+function closeContact(){
+    document.getElementById('contactModal').style.display='none';
+}
+</script>
+
+</body>
+</html>
