@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <title>SYSTEM-WIN-VER 官网</title>
@@ -47,6 +46,10 @@ body {
 
 .navbar li {
     cursor: pointer;
+    transition: color 0.25s;
+}
+.navbar li:hover {
+    color: #4facfe;
 }
 
 /* ===== 页面容器（核心） ===== */
@@ -88,6 +91,10 @@ body {
     background: linear-gradient(135deg,#1e90ff,#4facfe);
     color: white;
     cursor: pointer;
+    transition: opacity 0.25s;
+}
+.btn:hover {
+    opacity: 0.85;
 }
 
 /* 页面切换 */
@@ -125,6 +132,8 @@ body {
         <li onclick="showPage('app')">打开APP</li>
         <li onclick="showPage('follow')">关注</li>
         <li onclick="showPage('iso')">ISO</li>
+        <!-- 新增工具导航，放在联系前面 -->
+        <li onclick="showPage('tools')">工具</li>
         <li onclick="openContact()">联系</li>
     </ul>
 </div>
@@ -150,7 +159,7 @@ body {
 <div id="iso" class="card page">
     <h1>获取 ISO</h1>
     <button class="btn"
-    onclick="window.location.href='https://www.123865.com/s/JK1Bvd-UwIl?pwd=wfX0'">
+    onclick="window.location.href='https://www123865.com/s/JK1Bvd-UwIl?pwd=wfX0'">
     前往下载
     </button>
 </div>
@@ -158,20 +167,27 @@ body {
 <!-- 关注 -->
 <div id="follow" class="card page">
     <h1>关注我</h1>
-    <button class="btn" onclick="window.location.href='https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main'">抖音</button>
-    <button class="btn" onclick="window.location.href='https://space.bilibili.com/3546698745907620/upload/video'">哔哩哔哩</button>
-    <button class="btn" onclick="window.location.href='https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH'">快手</button>
+    <button class="btn" onclick="window.open('https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main','_blank')">抖音</button>
+    <button class="btn" onclick="window.open('https://space.bilibili.com/3546698745907620/upload/video','_blank')">哔哩哔哩</button>
+    <button class="btn" onclick="window.open('https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH','_blank')">快手</button>
+</div>
+
+<!-- 新增工具页面 -->
+<div id="tools" class="card page">
+    <h1>工具</h1>
+    <button class="btn" onclick="window.open('https://47.242.128.61:8000/register?aff=8Txm8tR5','_blank')">魔戒.net</button>
+    <button class="btn" onclick="window.open('https://romant.xyz/#/register?code=PxuRTVpg','_blank')">牛逼</button>
 </div>
 
 </div>
 
-<!-- 联系 -->
+<!-- 联系弹窗 -->
 <div id="contactModal" class="modal">
     <div class="modal-content">
         <h3>联系我</h3>
         <p>QQ：2353724883</p>
         <button class="btn"
-        onclick="window.location.href='https://qm.qq.com/q/yXhZBOXgUa'">
+        onclick="window.open('https://qm.qq.com/q/yXhZBOXgUa','_blank')">
         加QQ群
         </button>
         <p style="margin-top:10px;">邮箱：</p>
@@ -182,13 +198,16 @@ body {
 </div>
 
 <script>
+// 页面切换通用函数
 function showPage(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 }
+// 打开联系弹窗
 function openContact(){
     document.getElementById('contactModal').style.display='flex';
 }
+// 关闭联系弹窗
 function closeContact(){
     document.getElementById('contactModal').style.display='none';
 }
