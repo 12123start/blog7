@@ -1,217 +1,351 @@
 <!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>SYSTEM-WIN-VER 官网</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SYSTEM-WIN-VER 官方网站，提供快速打开、ISO 下载、社交平台和实用工具入口。">
+  <title>SYSTEM-WIN-VER 官网</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-1: #0a0f2c;
+      --bg-2: #081a3a;
+      --bg-3: #0f2c55;
+      --panel: rgba(15, 25, 60, 0.95);
+      --nav: rgba(10, 15, 40, 0.92);
+      --primary: #4facfe;
+      --primary-dark: #1e90ff;
+      --text: #ffffff;
+      --muted: #a9c7ff;
+      --border: rgba(0, 140, 255, 0.25);
+      --shadow: 0 0 50px rgba(0, 140, 255, 0.3);
+    }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", "Microsoft YaHei";
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, #0a0f2c, #081a3a, #0f2c55);
-    color: white;
-}
+    html {
+      min-height: 100%;
+      background: var(--bg-1);
+    }
 
-/* ===== 导航栏 ===== */
-.navbar {
-    height: 70px;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-    background: rgba(10,15,40,0.9);
-    border-bottom: 1px solid rgba(0,140,255,0.2);
-}
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      color: var(--text);
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+    }
 
-.logo {
-    font-size: 20px;
-    color: #4facfe;
-    font-weight: bold;
-}
+    button {
+      font: inherit;
+    }
 
-.navbar ul {
-    display: flex;
-    gap: 30px;
-    list-style: none;
-}
+    .navbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px 40px;
+      background: var(--nav);
+      border-bottom: 1px solid var(--border);
+    }
 
-.navbar li {
-    cursor: pointer;
-    transition: color 0.25s;
-}
-.navbar li:hover {
-    color: #4facfe;
-}
+    .logo {
+      flex-shrink: 0;
+      color: var(--primary);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
 
-/* ===== 页面容器（核心） ===== */
-.main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;  /* 真·垂直居中 */
-}
+    .nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      list-style: none;
+    }
 
-/* ===== 卡片 ===== */
-.card {
-    background: rgba(15,25,60,0.95);
-    padding: 60px;
-    border-radius: 18px;
-    width: 90%;
-    max-width: 720px;
-    text-align: center;
-    box-shadow: 0 0 50px rgba(0,140,255,0.3);
-}
+    .nav-button,
+    .close-button {
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      padding: 8px 12px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
 
-/* ===== 标题 ===== */
-.card h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
+    .nav-button:hover,
+    .nav-button:focus-visible,
+    .close-button:hover,
+    .close-button:focus-visible {
+      background: rgba(79, 172, 254, 0.14);
+      color: var(--primary);
+      outline: none;
+    }
 
-.card p {
-    color: #a9c7ff;
-}
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 40px 20px;
+    }
 
-/* ===== 按钮 ===== */
-.btn {
-    margin-top: 20px;
-    padding: 16px;
-    width: 100%;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#1e90ff,#4facfe);
-    color: white;
-    cursor: pointer;
-    transition: opacity 0.25s;
-}
-.btn:hover {
-    opacity: 0.85;
-}
+    .card {
+      width: min(90%, 720px);
+      padding: 60px;
+      border: 1px solid rgba(79, 172, 254, 0.08);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
 
-/* 页面切换 */
-.page { display:none; }
-.active { display:block; }
+    .page[hidden],
+    .modal[hidden] {
+      display: none;
+    }
 
-/* ===== 弹窗 ===== */
-.modal {
-    position: fixed;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.6);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
+    .card h1 {
+      margin-bottom: 20px;
+      font-size: clamp(28px, 5vw, 36px);
+      line-height: 1.25;
+    }
 
-.modal-content {
-    background:#0f1b3f;
-    padding:25px;
-    border-radius:12px;
-    width:90%;
-    max-width:350px;
-    text-align:center;
-}
-</style>
+    .card p {
+      color: var(--muted);
+    }
+
+    .button-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      outline: 3px solid rgba(79, 172, 254, 0.35);
+      outline-offset: 2px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.68);
+    }
+
+    .modal-content {
+      width: min(90%, 380px);
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(15, 27, 63, 0.9);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 12px;
+    }
+
+    .contact-line {
+      margin-top: 8px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .modal-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .close-button {
+      width: 100%;
+      border: 1px solid var(--border);
+      color: var(--primary);
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 20px;
+      }
+
+      .nav-list {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 4px;
+      }
+
+      .nav-button {
+        padding: 8px 10px;
+      }
+
+      .main {
+        padding: 28px 12px;
+      }
+
+      .card {
+        width: 100%;
+        padding: 36px 20px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="navbar">
+  <header class="navbar">
     <div class="logo">SYSTEM-WIN-VER</div>
-    <ul>
-        <li onclick="showPage('home')">首页</li>
-        <li onclick="showPage('app')">打开APP</li>
-        <li onclick="showPage('follow')">关注</li>
-        <li onclick="showPage('iso')">ISO</li>
-        <!-- 新增工具导航，放在联系前面 -->
-        <li onclick="showPage('tools')">工具</li>
-        <li onclick="openContact()">联系</li>
-    </ul>
-</div>
+    <nav aria-label="主导航">
+      <ul class="nav-list">
+        <li><button type="button" class="nav-button" data-page="home">首页</button></li>
+        <li><button type="button" class="nav-button" data-page="app">打开 APP</button></li>
+        <li><button type="button" class="nav-button" data-page="follow">关注</button></li>
+        <li><button type="button" class="nav-button" data-page="iso">ISO</button></li>
+        <li><button type="button" class="nav-button" data-page="tools">工具</button></li>
+        <li><button type="button" class="nav-button" id="contactButton">联系</button></li>
+      </ul>
+    </nav>
+  </header>
 
-<div class="main">
+  <main class="main">
+    <section id="home" class="card page" aria-labelledby="homeTitle">
+      <h1 id="homeTitle">欢迎来到 SYSTEM-WIN-VER</h1>
+      <p>请在导航栏中选择您想要访问的内容。</p>
+    </section>
 
-<!-- 首页 -->
-<div id="home" class="card page active">
-    <h1>欢迎来到 SYSTEM-WIN-VER</h1>
-    <p>请在导航栏里选择您想要干什么</p>
-</div>
+    <section id="app" class="card page" aria-labelledby="appTitle" hidden>
+      <h1 id="appTitle">快速打开</h1>
+      <div class="button-stack">
+        <button type="button" class="btn" data-external-url="https://www.123865.com/s/JK1Bvd-QNIl?notoken=1&amp;pwd=3RkK">立即前往</button>
+      </div>
+    </section>
 
-<!-- APP -->
-<div id="app" class="card page">
-    <h1>快速打开</h1>
-    <button class="btn"
-    onclick="window.location.href='https://www.123865.com/s/JK1Bvd-QNIl?notoken=1&pwd=3RkK'">
-    立即前往
-    </button>
-</div>
+    <section id="iso" class="card page" aria-labelledby="isoTitle" hidden>
+      <h1 id="isoTitle">获取 ISO</h1>
+      <div class="button-stack">
+        <button type="button" class="btn" data-external-url="https://1851622828.share.123865.com/123pan/JK1Bvd-OOlb">前往下载</button>
+      </div>
+    </section>
 
-<!-- ISO -->
-<div id="iso" class="card page">
-    <h1>获取 ISO</h1>
-    <button class="btn"
-    onclick="window.location.href='https://1851622828.share.123865.com/123pan/JK1Bvd-OOlb'">
-    前往下载
-    </button>
-</div>
+    <section id="follow" class="card page" aria-labelledby="followTitle" hidden>
+      <h1 id="followTitle">关注我</h1>
+      <div class="button-stack">
+        <button type="button" class="btn" data-external-url="https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main">抖音</button>
+        <button type="button" class="btn" data-external-url="https://space.bilibili.com/3546698745907620/upload/video">哔哩哔哩</button>
+        <button type="button" class="btn" data-external-url="https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH">快手</button>
+      </div>
+    </section>
 
-<!-- 关注 -->
-<div id="follow" class="card page">
-    <h1>关注我</h1>
-    <button class="btn" onclick="window.open('https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main','_blank')">抖音</button>
-    <button class="btn" onclick="window.open('https://space.bilibili.com/3546698745907620/upload/video','_blank')">哔哩哔哩</button>
-    <button class="btn" onclick="window.open('https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH','_blank')">快手</button>
-</div>
+    <section id="tools" class="card page" aria-labelledby="toolsTitle" hidden>
+      <h1 id="toolsTitle">工具</h1>
+      <div class="button-stack">
+        <button type="button" class="btn" data-external-url="https://47.242.128.61:8000/register?aff=8Txm8tR5">魔戒.net</button>
+        <button type="button" class="btn" data-external-url="https://romant.xyz/#/register?code=PxuRTVpg">牛逼</button>
+      </div>
+    </section>
+  </main>
 
-<!-- 新增工具页面 -->
-<div id="tools" class="card page">
-    <h1>工具</h1>
-    <button class="btn" onclick="window.open('https://47.242.128.61:8000/register?aff=8Txm8tR5','_blank')">魔戒.net</button>
-    <button class="btn" onclick="window.open('https://romant.xyz/#/register?code=PxuRTVpg','_blank')">牛逼</button>
-</div>
-
-</div>
-
-<!-- 联系弹窗 -->
-<div id="contactModal" class="modal">
-    <div class="modal-content">
-        <h3>联系我</h3>
-        <p>QQ：2353724883</p>
-        <button class="btn"
-        onclick="window.open('https://qm.qq.com/q/yXhZBOXgUa','_blank')">
-        加QQ群
-        </button>
-        <p style="margin-top:10px;">邮箱：</p>
-        <p>cchyts@qq.com</p>
-        <p>systemwinver@gmail.com</p>
-        <div onclick="closeContact()" style="margin-top:10px;cursor:pointer;color:#4facfe;">关闭</div>
+  <div id="contactModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle" hidden>
+    <div class="modal-content" role="document">
+      <h2 id="contactTitle">联系我</h2>
+      <p class="contact-line">QQ：2353724883</p>
+      <div class="modal-actions">
+        <button type="button" class="btn" data-external-url="https://qm.qq.com/q/yXhZBOXgUa">加入 QQ 群</button>
+        <p class="contact-line">邮箱：cchyts@qq.com</p>
+        <p class="contact-line">systemwinver@gmail.com</p>
+        <button type="button" class="close-button" id="closeContactButton">关闭</button>
+      </div>
     </div>
-</div>
+  </div>
 
-<script>
-// 页面切换通用函数
-function showPage(id){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-}
-// 打开联系弹窗
-function openContact(){
-    document.getElementById('contactModal').style.display='flex';
-}
-// 关闭联系弹窗
-function closeContact(){
-    document.getElementById('contactModal').style.display='none';
-}
-</script>
+  <script>
+    (() => {
+      const pages = document.querySelectorAll('.page');
+      const navButtons = document.querySelectorAll('[data-page]');
+      const externalButtons = document.querySelectorAll('[data-external-url]');
+      const modal = document.getElementById('contactModal');
+      const contactButton = document.getElementById('contactButton');
+      const closeContactButton = document.getElementById('closeContactButton');
+      let lastFocusedElement = null;
 
+      function showPage(pageId) {
+        const target = document.getElementById(pageId);
+        if (!target) return;
+
+        pages.forEach((page) => {
+          page.hidden = page !== target;
+        });
+      }
+
+      function openExternalUrl(url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+
+      function openContact() {
+        lastFocusedElement = document.activeElement;
+        modal.hidden = false;
+        closeContactButton.focus();
+      }
+
+      function closeContact() {
+        modal.hidden = true;
+        if (lastFocusedElement instanceof HTMLElement) {
+          lastFocusedElement.focus();
+        }
+      }
+
+      navButtons.forEach((button) => {
+        button.addEventListener('click', () => showPage(button.dataset.page));
+      });
+
+      externalButtons.forEach((button) => {
+        button.addEventListener('click', () => openExternalUrl(button.dataset.externalUrl));
+      });
+
+      contactButton.addEventListener('click', openContact);
+      closeContactButton.addEventListener('click', closeContact);
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeContact();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.hidden) closeContact();
+      });
+    })();
+  </script>
 </body>
 </html>
