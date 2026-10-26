@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SYSTEM-WIN-VER 官方网站，提供快速打开、ISO 下载、社交平台和实用工具入口。">
+  <meta name="description" content="SYSTEM-WIN-VER 官方网站，提供 ISO 下载、社交平台和实用工具入口。">
   <title>SYSTEM-WIN-VER 官网</title>
   <style>
     :root {
@@ -231,9 +231,8 @@
     <nav aria-label="主导航">
       <ul class="nav-list">
         <li><button type="button" class="nav-button" data-page="home">首页</button></li>
-        <li><button type="button" class="nav-button" data-page="app">打开 APP</button></li>
-        <li><button type="button" class="nav-button" data-page="follow">关注</button></li>
         <li><button type="button" class="nav-button" data-page="iso">ISO</button></li>
+        <li><button type="button" class="nav-button" data-page="follow">关注</button></li>
         <li><button type="button" class="nav-button" data-page="tools">工具</button></li>
         <li><button type="button" class="nav-button" id="contactButton">联系</button></li>
       </ul>
@@ -244,13 +243,6 @@
     <section id="home" class="card page" aria-labelledby="homeTitle">
       <h1 id="homeTitle">欢迎来到 SYSTEM-WIN-VER</h1>
       <p>请在导航栏中选择您想要访问的内容。</p>
-    </section>
-
-    <section id="app" class="card page" aria-labelledby="appTitle" hidden>
-      <h1 id="appTitle">快速打开</h1>
-      <div class="button-stack">
-        <button type="button" class="btn" data-external-url="https://www.123865.com/s/JK1Bvd-QNIl?notoken=1&amp;pwd=3RkK">立即前往</button>
-      </div>
     </section>
 
     <section id="iso" class="card page" aria-labelledby="isoTitle" hidden>
@@ -283,7 +275,6 @@
       <h2 id="contactTitle">联系我</h2>
       <p class="contact-line">QQ：2353724883</p>
       <div class="modal-actions">
-        <button type="button" class="btn" data-external-url="https://qm.qq.com/q/yXhZBOXgUa">加入 QQ 群</button>
         <p class="contact-line">邮箱：cchyts@qq.com</p>
         <p class="contact-line">systemwinver@gmail.com</p>
         <button type="button" class="close-button" id="closeContactButton">关闭</button>
@@ -306,46 +297,4 @@
         if (!target) return;
 
         pages.forEach((page) => {
-          page.hidden = page !== target;
-        });
-      }
-
-      function openExternalUrl(url) {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
-
-      function openContact() {
-        lastFocusedElement = document.activeElement;
-        modal.hidden = false;
-        closeContactButton.focus();
-      }
-
-      function closeContact() {
-        modal.hidden = true;
-        if (lastFocusedElement instanceof HTMLElement) {
-          lastFocusedElement.focus();
-        }
-      }
-
-      navButtons.forEach((button) => {
-        button.addEventListener('click', () => showPage(button.dataset.page));
-      });
-
-      externalButtons.forEach((button) => {
-        button.addEventListener('click', () => openExternalUrl(button.dataset.externalUrl));
-      });
-
-      contactButton.addEventListener('click', openContact);
-      closeContactButton.addEventListener('click', closeContact);
-
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) closeContact();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.hidden) closeContact();
-      });
-    })();
-  </script>
-</body>
-</html>
+          page.hidden = page !== 
