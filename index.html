@@ -297,4 +297,46 @@
         if (!target) return;
 
         pages.forEach((page) => {
-          page.hidden = page !== 
+          page.hidden = page !== target;
+        });
+      }
+
+      function openExternalUrl(url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+
+      function openContact() {
+        lastFocusedElement = document.activeElement;
+        modal.hidden = false;
+        closeContactButton.focus();
+      }
+
+      function closeContact() {
+        modal.hidden = true;
+        if (lastFocusedElement instanceof HTMLElement) {
+          lastFocusedElement.focus();
+        }
+      }
+
+      navButtons.forEach((button) => {
+        button.addEventListener('click', () => showPage(button.dataset.page));
+      });
+
+      externalButtons.forEach((button) => {
+        button.addEventListener('click', () => openExternalUrl(button.dataset.externalUrl));
+      });
+
+      contactButton.addEventListener('click', openContact);
+      closeContactButton.addEventListener('click', closeContact);
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeContact();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.hidden) closeContact();
+      });
+    })();
+  </script>
+</body>
+</html>
