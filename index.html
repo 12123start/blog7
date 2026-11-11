@@ -1,300 +1,767 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SYSTEM-WIN-VER 官方网站，提供 ISO 下载、社交平台和实用工具入口。">
-  <title>SYSTEM-WIN-VER 官网</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg-1: #0a0f2c;
-      --bg-2: #081a3a;
-      --bg-3: #0f2c55;
-      --panel: rgba(15, 25, 60, 0.95);
-      --nav: rgba(10, 15, 40, 0.92);
-      --primary: #4facfe;
-      --primary-dark: #1e90ff;
-      --text: #ffffff;
-      --muted: #a9c7ff;
-      --border: rgba(0, 140, 255, 0.25);
-      --shadow: 0 0 50px rgba(0, 140, 255, 0.3);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="SYSTEM-WIN-VER 官方网站，提供 ISO 资源、社交平台、友链和联系入口。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SYSTEM-WIN-VER 官网">
+<meta property="og:description" content="把常用入口放在手边。打开资源，检查链接，继续工作。">
+<title>SYSTEM-WIN-VER 官网</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2307111f'/%3E%3Crect x='15' y='15' width='34' height='34' fill='none' stroke='%237ebadc' stroke-width='4' transform='rotate(30 32 32)'/%3E%3Crect x='15' y='30' width='34' height='5' fill='%23f2c94c'/%3E%3C/svg%3E">
+<noscript><style>.content{display:grid!important}.menu,.nav,.hero .actions{display:none!important}</style></noscript>
+<style>
+/* ============ Tokens ============ */
+:root{
+  --bg:#07111f;--panel:#0b1b2d;--panel-2:#0d2439;
+  --blue:#7ebadc;--muted:#9eb1c3;--yellow:#f2c94c;--white:#f4f7fb;
+  --line:rgba(126,186,220,.22);--line-strong:rgba(126,186,220,.45);
+  --gutter:clamp(20px,7.5vw,110px);
+  --header-h:72px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  --display:Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace;
+  --emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* ============ Base ============ */
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+[hidden]{display:none!important}
+html{
+  background:var(--bg);
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 12px);
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+}
+body{
+  min-height:100vh;min-height:100dvh;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  overflow-x:clip;
+  background:var(--bg) radial-gradient(circle at 80% 20%,#173653 0,#07111f 42%,#050b14 100%);
+  color:var(--white);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+body.modal-open{overflow:hidden}
+a{color:inherit}
+a,button{font:inherit;-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance}
 
-    html {
-      min-height: 100%;
-      background: var(--bg-1);
-    }
+/* ============ Header / Nav ============ */
+.site-header{
+  position:sticky;top:0;z-index:30;
+  min-height:var(--header-h);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:0 var(--gutter);
+  border-bottom:1px solid var(--line);
+  background:rgba(7,17,31,.96);
+}
+.brand{display:flex;align-items:center;gap:13px;min-height:44px;color:var(--white);text-decoration:none}
+.brand-mark{position:relative;flex:none;width:38px;height:38px;border:2px solid #2a5a82;transform:rotate(30deg)}
+.brand-mark::before{content:"";position:absolute;left:4px;top:15px;width:26px;height:4px;background:var(--yellow);transform:rotate(-30deg)}
+.brand-text{font:700 12px/1 var(--mono);letter-spacing:.08em;white-space:nowrap}
+.brand-text b{color:var(--yellow)}
+.nav{display:flex;align-items:center;gap:6px}
+.nav a,.nav button{
+  display:inline-flex;align-items:center;min-height:40px;
+  padding:9px 12px;border:1px solid transparent;background:transparent;
+  color:#92a7bb;text-decoration:none;font:700 12px/1 var(--mono);
+}
+.nav a.active{border-color:var(--line-strong);background:#122940;color:var(--yellow)}
+.nav button{border-color:var(--yellow);color:var(--yellow);cursor:pointer}
+.menu{
+  display:none;place-items:center;flex:none;width:44px;height:44px;
+  border:1px solid var(--line-strong);background:transparent;color:var(--white);
+  font-size:22px;line-height:1;cursor:pointer;
+}
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
-      color: var(--text);
-      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
-      line-height: 1.6;
-    }
+/* ============ Hero ============ */
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-height:620px;
+  display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px;
+  padding:74px var(--gutter) 92px;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(7,17,31,.98) 0%,rgba(7,17,31,.83) 55%,rgba(7,17,31,.38)),
+    repeating-linear-gradient(0deg,transparent 0 44px,rgba(126,186,220,.08) 45px 46px),
+    repeating-linear-gradient(90deg,transparent 0 44px,rgba(126,186,220,.08) 45px 46px);
+}
+.hero::after{
+  content:"";position:absolute;z-index:-1;right:5%;top:10%;width:420px;height:420px;
+  border:1px solid rgba(126,186,220,.18);transform:rotate(30deg);
+  box-shadow:0 0 0 20px rgba(126,186,220,.03),0 0 0 40px rgba(126,186,220,.03);
+}
+.eyebrow{color:var(--blue);font:700 11px/1.4 var(--mono);letter-spacing:.14em}
+.status-dot{display:inline-block;width:7px;height:7px;margin-right:8px;background:var(--yellow);box-shadow:0 0 0 4px rgba(242,201,76,.15)}
+h1{padding-top:24px;font-size:clamp(3.4rem,8vw,7rem);line-height:.98;letter-spacing:-.05em}
+h1 em{font-style:normal;color:var(--yellow)}
+.lead{max-width:500px;padding-top:26px;color:#b8c6d4;font-size:17px;line-height:1.75;text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;padding-top:32px}
 
-    button {
-      font: inherit;
-    }
+.action{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:48px;padding:13px 17px;
+  border:1px solid var(--blue);background:#0e2033;color:var(--white);
+  font:700 12px/1.3 var(--mono);text-decoration:none;
+  transition:transform .15s ease,border-color .15s ease;
+}
+.action.primary{border-color:var(--yellow);background:var(--yellow);color:#07111f}
+.action:active{transform:translateY(1px)}
+.arrow{flex:none}
 
-    .navbar {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 14px 40px;
-      background: var(--nav);
-      border-bottom: 1px solid var(--border);
-    }
+.hero-visual{
+  position:relative;display:flex;flex-direction:column;width:100%;min-height:340px;padding:25px;overflow:hidden;
+  border:1px solid rgba(126,186,220,.55);
+  background:linear-gradient(145deg,rgba(13,36,57,.98),rgba(7,17,31,.88));
+  box-shadow:10px 10px 0 var(--yellow);
+}
+.hero-visual::before{
+  content:"";position:absolute;inset:25px;pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg,transparent 0 35px,rgba(126,186,220,.13) 36px 37px),
+    repeating-linear-gradient(90deg,transparent 0 35px,rgba(126,186,220,.13) 36px 37px);
+}
+.visual-top,.visual-bottom{
+  position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;
+  color:var(--blue);font:700 10px/1.4 var(--mono);letter-spacing:.08em;
+}
+.visual-bottom{margin-top:auto;color:#7f9db3}
+.online{color:var(--yellow)}
+.online::before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;background:var(--yellow)}
+.visual-core{position:relative;z-index:1;display:flex;align-items:center;gap:18px;margin-top:56px}
+.core-mark{
+  display:grid;place-items:center;flex:none;width:84px;height:84px;margin:18px;
+  border:2px solid var(--yellow);color:var(--yellow);font:700 30px/1 var(--mono);transform:rotate(45deg);
+}
+.core-mark span{transform:rotate(-45deg)}
+.visual-core>div{display:grid;gap:7px;min-width:0}
+.visual-core strong{font:700 clamp(17px,5vw,22px)/1.2 var(--display);letter-spacing:-.02em}
+.visual-core small{color:#a9bfd0;font-size:13px}
+.visual-track{position:relative;z-index:1;display:flex;gap:8px;margin:44px 0 20px}
+.visual-track i{display:block;flex:1;height:5px;background:var(--blue)}
+.visual-track i:nth-child(2){flex:1.7;background:var(--yellow)}
+.visual-track i:nth-child(3){flex:.7;background:#315a78}
 
-    .logo {
-      flex-shrink: 0;
-      color: var(--primary);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
+/* ============ Signals ============ */
+.signals{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line);background:var(--panel)}
+.signals>div{min-height:128px;padding:25px var(--gutter);border-right:1px solid var(--line)}
+.signals>div:last-child{border-right:0}
+.signals small{color:var(--yellow);font:700 11px/1.4 var(--mono);letter-spacing:.1em}
+.signals strong{display:block;padding-top:13px;font-size:22px}
+.signals span{display:block;padding-top:5px;color:#7f9ab0;font-size:13px}
 
-    .nav-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px;
-      list-style: none;
-    }
+/* ============ Workspace ============ */
+.workspace{max-width:1300px;margin:0 auto;padding:95px var(--gutter) 100px}
+.workspace-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.workspace-head h2{padding-top:16px;font-size:clamp(2.6rem,5vw,5rem);line-height:1;letter-spacing:-.05em}
+.workspace-head>span{color:var(--blue);font:700 11px/1.4 var(--mono);white-space:nowrap}
 
-    .nav-button,
-    .close-button {
-      border: 0;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-      padding: 8px 12px;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
+.content{display:none;grid-template-columns:1fr 1fr;gap:46px;min-height:380px;padding-top:44px}
+.content.show{display:grid}
+.content>div:first-child{min-width:0}
+.content h3{padding-top:20px;font-size:clamp(2.7rem,5vw,5rem);line-height:1;letter-spacing:-.05em}
+.content h3 span{color:var(--yellow)}
+.content p{max-width:450px;padding-top:22px;color:var(--muted);font-size:16px;line-height:1.75;text-wrap:pretty}
+.content>div>.action{margin-top:28px}
+.link-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;max-width:600px;padding-top:28px}
+.link-grid .action{width:100%}
 
-    .nav-button:hover,
-    .nav-button:focus-visible,
-    .close-button:hover,
-    .close-button:focus-visible {
-      background: rgba(79, 172, 254, 0.14);
-      color: var(--primary);
-      outline: none;
-    }
+/* ============ Visual panels ============ */
+.page-visual{
+  position:relative;display:flex;flex-direction:column;min-height:320px;padding:28px;overflow:hidden;
+  border:1px solid var(--line-strong);background:var(--panel-2);
+}
+.visual-tag{display:flex;justify-content:space-between;gap:12px;color:var(--blue);font:700 10px/1.4 var(--mono);letter-spacing:.1em}
+.dynamic-line{
+  margin-top:auto;padding-top:18px;color:var(--yellow);
+  font:700 12px/1.6 var(--mono);letter-spacing:.03em;transition:opacity .28s ease;
+}
+.dynamic-line.fade{opacity:0}
 
-    .main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 40px 20px;
-    }
+.home-visual{background:linear-gradient(145deg,#102d47,#07111f 72%)}
+.home-state{display:grid;gap:8px;margin-top:64px}
+.home-state b{color:var(--yellow);font:700 12px/1.4 var(--mono);letter-spacing:.12em}
+.home-state strong{font:700 clamp(2rem,4vw,3.4rem)/1.1 var(--display);letter-spacing:-.03em}
+.home-lines{display:grid;gap:9px;margin-top:40px}
+.home-lines i{display:block;height:5px;background:#315a78}
+.home-lines i:nth-child(1){width:82%;background:var(--blue)}
+.home-lines i:nth-child(2){width:61%;background:var(--yellow)}
+.home-lines i:nth-child(3){width:42%}
 
-    .card {
-      width: min(90%, 720px);
-      padding: 60px;
-      border: 1px solid rgba(79, 172, 254, 0.08);
-      border-radius: 18px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
+.iso-visual{background:linear-gradient(135deg,#07111f,#173653)}
+.iso-card{display:flex;align-items:center;gap:22px;margin-top:56px}
+.iso-disc{
+  display:grid;place-items:center;flex:none;width:104px;height:104px;border:2px solid var(--yellow);border-radius:50%;
+  background:radial-gradient(circle,#f2c94c 0 13%,transparent 14% 29%,rgba(242,201,76,.22) 30% 32%,transparent 33%);
+  color:var(--yellow);font:700 12px/1 var(--mono);
+}
+.iso-copy{display:grid;gap:8px;min-width:0}
+.iso-copy strong{font-size:21px}
+.iso-copy small{color:#a9bfd0;font:11px/1.4 var(--mono)}
+.iso-meter{display:flex;gap:8px;margin-top:40px}
+.iso-meter i{flex:1;height:5px;background:#315a78}
+.iso-meter i:nth-child(2){flex:1.4;background:var(--yellow)}
+.iso-meter i:nth-child(3){flex:.6;background:var(--blue)}
 
-    .page[hidden],
-    .modal[hidden] {
-      display: none;
-    }
+.tools-visual{background:var(--panel-2)}
+.tool-stack{display:grid;gap:10px;margin-top:36px}
+.tool-card{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:14px;padding:15px;border:1px solid rgba(126,186,220,.35);background:rgba(7,17,31,.55)}
+.tool-card b{color:var(--yellow);font:700 11px/1 var(--mono)}
+.tool-card strong{font-size:18px;overflow-wrap:anywhere}
+.tool-card small{color:#8fa8ba;font:10px/1 var(--mono)}
 
-    .card h1 {
-      margin-bottom: 20px;
-      font-size: clamp(28px, 5vw, 36px);
-      line-height: 1.25;
-    }
+.friendly-visual{background:linear-gradient(135deg,#102d47,#07111f)}
+.friendly-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:48px}
+.link-node{padding:20px 16px;border:1px solid var(--line-strong);background:var(--panel-2);min-width:0}
+.link-node b{display:block;color:var(--yellow);font:700 11px/1.4 var(--mono)}
+.link-node strong{display:block;padding-top:10px;font-size:19px;overflow-wrap:anywhere}
+.link-node small{display:block;padding-top:8px;color:var(--muted);font-size:12px}
 
-    .card p {
-      color: var(--muted);
-    }
+.follow-visual{background:radial-gradient(circle at 50% 45%,#183b5a 0,#0d2439 45%,#07111f 100%)}
+.follow-note{margin-top:16px;color:#cbd8e3;font-size:15px;line-height:1.7}
+.follow-platforms{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.follow-platforms span{padding:8px 12px;border:1px solid rgba(126,186,220,.5);color:#dce9f2;font:700 11px/1.2 var(--mono)}
+.follow-visual .dynamic-line{color:#dce9f2}
 
-    .button-stack {
-      display: grid;
-      gap: 12px;
-      margin-top: 20px;
-    }
+.emoji-stage{
+  position:relative;height:clamp(190px,52vw,250px);margin-top:14px;overflow:hidden;pointer-events:none;
+  border:1px solid rgba(126,186,220,.25);background:rgba(7,17,31,.35);
+}
+.emoji-stage::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(242,201,76,.2) 0 2px,transparent 3px),
+    radial-gradient(circle at 78% 70%,rgba(126,186,220,.22) 0 2px,transparent 3px),
+    radial-gradient(circle at 58% 20%,rgba(242,201,76,.18) 0 1px,transparent 2px);
+  background-size:120px 100px,150px 130px,90px 90px;
+}
+.emoji{
+  position:absolute;z-index:1;display:block;user-select:none;
+  font:clamp(2.4rem,9vw,4.2rem)/1 var(--emoji);
+  filter:drop-shadow(0 6px 6px rgba(0,0,0,.28));
+  will-change:translate,rotate;
+}
+/* 起始位置（不支持容器单位的旧浏览器就停在这里） */
+.emoji-one  {left:3%;top:7%; --x0:.03;--y0:.07;--x1:.26;--y1:.62;--x2:.55;--y2:.18;--x3:.82;--y3:.70;--dur:10s;--delay:0s}
+.emoji-two  {left:77%;top:8%;--x0:.77;--y0:.08;--x1:.52;--y1:.57;--x2:.18;--y2:.20;--x3:.67;--y3:.74;--dur:12s;--delay:-2s}
+.emoji-three{left:72%;top:68%;--x0:.72;--y0:.68;--x1:.38;--y1:.12;--x2:.06;--y2:.57;--x3:.61;--y3:.34;--dur:11s;--delay:-5s}
+.emoji-four {left:42%;top:72%;--x0:.42;--y0:.72;--x1:.83;--y1:.36;--x2:.49;--y2:.06;--x3:.10;--y3:.38;--dur:9s; --delay:-1s}
+.emoji-five {left:46%;top:6%; --x0:.46;--y0:.06;--x1:.14;--y1:.45;--x2:.76;--y2:.56;--x3:.32;--y3:.80;--dur:13s;--delay:-7s}
+.emoji-six  {left:8%;top:70%; --x0:.08;--y0:.70;--x1:.36;--y1:.30;--x2:.86;--y2:.15;--x3:.61;--y3:.78;--dur:8s; --delay:-3s}
+.emoji-message{
+  position:absolute;z-index:2;left:50%;bottom:14px;transform:translateX(-50%);
+  width:max-content;max-width:calc(100% - 24px);padding:9px 14px;text-align:center;
+  border:1px solid rgba(242,201,76,.7);background:rgba(7,17,31,.92);color:var(--yellow);
+  font:700 11px/1.5 var(--mono);letter-spacing:.06em;
+}
+/* 用 transform 系属性做动画（合成层，不触发重排），位置按舞台尺寸换算 */
+@supports (width:1cqw){
+  .emoji-stage{container-type:size}
+  .emoji{
+    left:0;top:0;
+    translate:calc((100cqw - 1.25em)*var(--x0)) calc((100cqh - 1.25em)*var(--y0));
+    animation:roam var(--dur,10s) ease-in-out infinite var(--delay,0s),wobble 3.4s ease-in-out infinite alternate;
+  }
+}
+@keyframes roam{
+  0%,100%{translate:calc((100cqw - 1.25em)*var(--x0)) calc((100cqh - 1.25em)*var(--y0))}
+  25%{translate:calc((100cqw - 1.25em)*var(--x1)) calc((100cqh - 1.25em)*var(--y1))}
+  50%{translate:calc((100cqw - 1.25em)*var(--x2)) calc((100cqh - 1.25em)*var(--y2))}
+  75%{translate:calc((100cqw - 1.25em)*var(--x3)) calc((100cqh - 1.25em)*var(--y3))}
+}
+@keyframes wobble{from{rotate:-9deg}to{rotate:11deg}}
 
-    .btn {
-      width: 100%;
-      min-height: 48px;
-      padding: 12px 16px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 600;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
+/* ============ Notice / Modal / Footer ============ */
+.notice{
+  position:fixed;right:20px;bottom:20px;z-index:40;max-width:min(420px,calc(100vw - 40px));
+  padding:13px 16px;border:1px solid var(--yellow);background:var(--panel);color:var(--yellow);
+  font:12px/1.6 var(--mono);box-shadow:7px 7px 0 var(--yellow);
+}
+.modal{
+  position:fixed;inset:0;z-index:50;display:grid;place-items:center;overflow-y:auto;overscroll-behavior:contain;
+  padding:max(20px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));
+  background:rgba(3,10,18,.88);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.dialog{width:min(100%,520px);padding:28px;border:1px solid var(--blue);background:rgba(8,25,42,.98);box-shadow:10px 10px 0 var(--yellow)}
+.dialog-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.close{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(126,186,220,.4);background:transparent;color:var(--white);cursor:pointer}
+.dialog h2{padding-top:36px;font-size:clamp(3rem,7vw,5rem);line-height:.95}
+.dialog h2 span{color:var(--yellow)}
+.dialog p{padding-top:16px;color:var(--muted);line-height:1.7}
+.contact-list{display:grid;gap:8px;padding:24px 0 4px}
+.contact{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;min-height:60px;
+  padding:13px 14px;border:1px solid rgba(126,186,220,.3);background:var(--panel-2);color:var(--white);
+  text-align:left;cursor:pointer;
+}
+.contact-info{min-width:0;overflow-wrap:anywhere}
+.contact small{display:block;padding-bottom:4px;color:var(--blue);font:10px/1.4 var(--mono)}
+.copy-label{flex:none;font-size:14px;color:var(--yellow)}
 
-    .btn:hover,
-    .btn:focus-visible {
-      opacity: 0.88;
-      transform: translateY(-1px);
-      outline: 3px solid rgba(79, 172, 254, 0.35);
-      outline-offset: 2px;
-    }
+footer{
+  display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;
+  padding:24px var(--gutter);padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);color:#7089a0;font:11px/1.6 var(--mono);letter-spacing:.06em;
+}
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.68);
-    }
+/* ============ Hover（仅鼠标设备，避免触屏“粘住”） ============ */
+@media (hover:hover){
+  .nav a:hover,.nav button:hover{border-color:var(--line-strong);background:#122940;color:var(--yellow)}
+  .action:hover{border-color:var(--yellow);transform:translateY(-2px)}
+  .contact:hover{border-color:var(--yellow)}
+}
 
-    .modal-content {
-      width: min(90%, 380px);
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: rgba(15, 27, 63, 0.9);
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
+/* ============ Desktop layout ============ */
+@media (min-width:801px){
+  .content[data-content="follow"]{grid-template-columns:1fr;gap:26px}
+  .content[data-content="follow"]>.page-visual{grid-row:1;min-height:330px}
+  .content[data-content="follow"]>div:first-child{grid-row:2}
+  .content[data-content="iso"]>div:first-child{grid-column:2;grid-row:1}
+  .content[data-content="iso"]>.page-visual{grid-column:1;grid-row:1}
+  .content[data-content="tools"]{grid-template-columns:.8fr 1.2fr;align-items:start}
+  .content[data-content="tools"]>.page-visual{grid-column:2;grid-row:1;transform:translateY(38px)}
+  .content[data-content="friendly"]{grid-template-columns:1.25fr .75fr;align-items:start}
+  .content[data-content="friendly"]>.page-visual{grid-column:2;grid-row:1;margin-top:72px}
+}
 
-    .modal-content h2 {
-      margin-bottom: 12px;
-    }
+/* ============ Mobile ============ */
+@media (max-width:800px){
+  :root{--header-h:64px}
+  .site-header{padding:0 max(16px,var(--gutter))}
+  .menu{display:grid}
+  .nav{
+    display:none;position:absolute;top:calc(100% + 8px);left:16px;right:16px;gap:6px;padding:10px;
+    background:var(--panel);border:1px solid var(--line-strong);box-shadow:6px 6px 0 var(--yellow);
+  }
+  .nav.open{display:grid;grid-template-columns:1fr 1fr}
+  .nav a,.nav button{min-height:48px;font-size:13px}
+  .nav button{grid-column:1/-1;justify-content:center}
 
-    .contact-line {
-      margin-top: 8px;
-      color: var(--muted);
-      overflow-wrap: anywhere;
-    }
+  .hero{grid-template-columns:1fr;gap:34px;min-height:0;padding:44px var(--gutter) 56px}
+  .hero::after{top:auto;right:-130px;bottom:-70px;width:300px;height:300px}
+  h1{padding-top:18px;font-size:clamp(2.6rem,11.5vw,4.2rem);line-height:1.05}
+  .lead{padding-top:20px;font-size:16px}
+  .actions{flex-direction:column;align-items:stretch;gap:12px;padding-top:26px}
+  .action{min-height:52px;font-size:13px}
 
-    .modal-actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
+  .hero-visual{min-height:0;padding:20px;box-shadow:6px 6px 0 var(--yellow)}
+  .hero-visual::before{inset:20px}
+  .visual-top,.visual-bottom,.visual-tag{font-size:11px}
+  .visual-core{gap:10px;margin-top:30px}
+  .core-mark{width:62px;height:62px;margin:16px;font-size:24px}
+  .visual-track{margin:30px 0 18px}
 
-    .close-button {
-      width: 100%;
-      border: 1px solid var(--border);
-      color: var(--primary);
-    }
+  .signals{grid-template-columns:1fr}
+  .signals>div{min-height:0;padding:18px var(--gutter);border-right:0;border-bottom:1px solid var(--line)}
+  .signals>div:last-child{border-bottom:0}
+  .signals strong{padding-top:8px;font-size:19px}
 
-    @media (max-width: 700px) {
-      .navbar {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 12px;
-        padding: 16px 20px;
-      }
+  .workspace{padding:48px var(--gutter) 64px}
+  .workspace-head{flex-direction:column;align-items:flex-start;gap:12px;padding-bottom:18px}
+  .workspace-head h2{padding-top:12px;font-size:clamp(2rem,9vw,2.6rem)}
+  .content{grid-template-columns:1fr;gap:28px;min-height:0;padding-top:28px}
+  .content h3{padding-top:14px;font-size:clamp(2.2rem,10vw,3.2rem)}
+  .content p{padding-top:16px}
+  .content>div>.action{margin-top:22px}
+  .link-grid{padding-top:22px}
 
-      .nav-list {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 4px;
-      }
+  .page-visual{min-height:0;padding:20px}
+  .home-state{margin-top:36px}
+  .home-lines{margin-top:28px}
+  .iso-card{gap:16px;margin-top:32px}
+  .iso-disc{width:84px;height:84px}
+  .iso-meter{margin-top:28px}
+  .tool-stack{margin-top:24px}
+  .friendly-map{margin-top:28px}
+  .follow-platforms{display:none}
 
-      .nav-button {
-        padding: 8px 10px;
-      }
+  .notice{left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));max-width:none;box-shadow:5px 5px 0 var(--yellow)}
+  .dialog{padding:22px;box-shadow:6px 6px 0 var(--yellow)}
+  .dialog h2{padding-top:26px;font-size:clamp(2.6rem,14vw,4rem)}
+  footer{flex-direction:column}
+}
+@media (max-width:360px){
+  .brand-text{font-size:11px;letter-spacing:.04em}
+  .nav.open{grid-template-columns:1fr}
+}
 
-      .main {
-        padding: 28px 12px;
-      }
-
-      .card {
-        width: 100%;
-        padding: 36px 20px;
-      }
-    }
-  </style>
+/* ============ 减少动态效果 ============ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .action,.dynamic-line{transition:none}
+  .emoji{animation:none!important}
+}
+</style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">SYSTEM-WIN-VER</div>
-    <nav aria-label="主导航">
-      <ul class="nav-list">
-        <li><button type="button" class="nav-button" data-page="home">首页</button></li>
-        <li><button type="button" class="nav-button" data-page="iso">ISO</button></li>
-        <li><button type="button" class="nav-button" data-page="follow">关注</button></li>
-        <li><button type="button" class="nav-button" data-page="tools">工具</button></li>
-        <li><button type="button" class="nav-button" id="contactButton">联系</button></li>
-      </ul>
-    </nav>
-  </header>
+<header class="site-header">
+  <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text"><b>SYS</b> / SYSTEM-WIN-VER</span></a>
+  <button class="menu" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="mainNav">☰</button>
+  <nav class="nav" id="mainNav" aria-label="主导航">
+    <a href="#home" data-section="home">00 首页</a>
+    <a href="#follow" data-section="follow">01 关注</a>
+    <a href="#iso" data-section="iso">02 ISO</a>
+    <a href="#tools" data-section="tools">03 工具</a>
+    <a href="#friendly" data-section="friendly">04 友链</a>
+    <button type="button" id="contactButton">联系</button>
+  </nav>
+</header>
 
-  <main class="main">
-    <section id="home" class="card page" aria-labelledby="homeTitle">
-      <h1 id="homeTitle">欢迎来到 SYSTEM-WIN-VER</h1>
-      <p>请在导航栏中选择您想要访问的内容。</p>
-    </section>
-
-    <section id="iso" class="card page" aria-labelledby="isoTitle" hidden>
-      <h1 id="isoTitle">获取 ISO</h1>
-      <div class="button-stack">
-        <button type="button" class="btn" data-external-url="https://1851622828.share.123865.com/123pan/JK1Bvd-OOlb">前往下载</button>
-      </div>
-    </section>
-
-    <section id="follow" class="card page" aria-labelledby="followTitle" hidden>
-      <h1 id="followTitle">关注我</h1>
-      <div class="button-stack">
-        <button type="button" class="btn" data-external-url="https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main">抖音</button>
-        <button type="button" class="btn" data-external-url="https://space.bilibili.com/3546698745907620/upload/video">哔哩哔哩</button>
-        <button type="button" class="btn" data-external-url="https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH">快手</button>
-      </div>
-    </section>
-
-    <section id="tools" class="card page" aria-labelledby="toolsTitle" hidden>
-      <h1 id="toolsTitle">工具</h1>
-      <div class="button-stack">
-        <button type="button" class="btn" data-external-url="https://47.242.128.61:8000/register?aff=8Txm8tR5">魔戒.net</button>
-        <button type="button" class="btn" data-external-url="https://romant.xyz/#/register?code=PxuRTVpg">牛逼</button>
-      </div>
-    </section>
-  </main>
-
-  <div id="contactModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle" hidden>
-    <div class="modal-content" role="document">
-      <h2 id="contactTitle">联系我</h2>
-      <p class="contact-line">QQ：2353724883</p>
-      <div class="modal-actions">
-        <p class="contact-line">邮箱：cchyts@qq.com</p>
-        <p class="contact-line">systemwinver@gmail.com</p>
-        <button type="button" class="close-button" id="closeContactButton">关闭</button>
+<main id="main">
+  <section class="hero" id="home">
+    <div>
+      <div class="eyebrow"><span class="status-dot"></span><span id="heroKicker">SYS / RELEASE WORKBENCH</span></div>
+      <h1 id="heroTitle">把常用入口<br><em>放在手边。</em></h1>
+      <p class="lead" id="heroDescription">SYSTEM-WIN-VER 是一个轻量、清晰、可验证的入口工作台。打开资源，检查链接，继续工作。</p>
+      <div class="actions">
+        <a class="action primary" id="heroAction" href="#iso"><span id="heroActionText">查看 ISO 资源</span><span class="arrow" id="heroActionArrow" aria-hidden="true">→</span></a>
       </div>
     </div>
+    <aside class="hero-visual" aria-label="SYSTEM-WIN-VER 状态展示">
+      <div class="visual-top"><span>VISUAL MODULE / 02</span><span class="online">ONLINE</span></div>
+      <div class="visual-core">
+        <span class="core-mark" aria-hidden="true"><span>SV</span></span>
+        <div><strong>SYSTEM-WIN-VER</strong><small>资源与入口 · 已就绪</small></div>
+      </div>
+      <div class="visual-track" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="visual-bottom"><span>LINKS / READY</span><span>SYSTEM / VERIFIED</span><span>BUILD / 2026.08</span></div>
+    </aside>
+  </section>
+
+  <section class="signals">
+    <div><small>01 / ISO RESOURCE</small><strong>ISO 资源</strong><span>保留清晰、可靠的下载入口。</span></div>
+    <div><small>02 / VERIFIED LINKS</small><strong>可验证链接</strong><span>每个入口都给出明确去向。</span></div>
+    <div><small>03 / RESPONSIVE</small><strong>随屏幕工作</strong><span>桌面和移动端均保持清晰。</span></div>
+  </section>
+
+  <section class="workspace">
+    <div class="workspace-head">
+      <div><div class="eyebrow">/ WORKSPACE</div><h2 id="workspaceTitle">入口已经就位。</h2></div>
+      <span id="activeLabel">ACTIVE / HOME</span>
+    </div>
+
+    <div class="content show" data-content="home" data-title="入口已经就位。">
+      <div>
+        <div class="eyebrow">00 / HOME</div>
+        <h3>你的下一步<br><span>已经就位。</span></h3>
+        <p>从这里选择一个入口，地址会同步到浏览器，返回键也能正常工作。</p>
+      </div>
+      <div class="page-visual home-visual">
+        <div class="visual-tag"><span>HOME / CONTROL DESK</span><span>READY</span></div>
+        <div class="home-state"><b>STATUS / ONLINE</b><strong>入口工作台</strong></div>
+        <div class="home-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="dynamic-line">入口已准备好。</div>
+      </div>
+    </div>
+
+    <div class="content" data-content="iso" data-title="资源已经备好。">
+      <div>
+        <div class="eyebrow">02 / ISO</div>
+        <h3>获取 ISO<br><span>资源已经备好。</span></h3>
+        <p>ISO 下载地址保持原值不变，点击后在新窗口打开目标资源。</p>
+        <a class="action primary" href="https://1851622828.share.123865.com/123pan/JK1Bvd-OOlb" target="_blank" rel="noopener noreferrer"><span>前往下载</span><span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="page-visual iso-visual">
+        <div class="visual-tag"><span>ISO / RESOURCE</span><span>VERIFIED</span></div>
+        <div class="iso-card">
+          <div class="iso-disc" aria-hidden="true">ISO</div>
+          <div class="iso-copy"><strong>DOWNLOAD READY</strong><small>ORIGINAL RESOURCE LINK</small></div>
+        </div>
+        <div class="iso-meter" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="dynamic-line">下载前建议先注册登录。</div>
+      </div>
+    </div>
+
+    <div class="content" data-content="follow" data-title="关注一下吧。">
+      <div>
+        <div class="eyebrow">01 / FOLLOW</div>
+        <h3>关注我<br><span>谢谢支持。</span></h3>
+        <p>求关注和给视频点赞，网站的运营成本不低，在白嫖我，我就要流浪大街了😭</p>
+        <div class="link-grid">
+          <a class="action" href="https://www.douyin.com/user/MS4wLjABAAAAEuMTnpiJEQKnC_lyYL_qKHSHN4qcVG1QfPiBVdqzizKEp2JlkGILglNy7WEY221j?from_tab_name=main" target="_blank" rel="noopener noreferrer"><span>抖音</span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="action" href="https://space.bilibili.com/3546698745907620/upload/video" target="_blank" rel="noopener noreferrer"><span>哔哩哔哩</span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="action" href="https://www.kuaishou.com/profile/3x2w4eiifrudfwk?source=SEARCH" target="_blank" rel="noopener noreferrer"><span>快手</span><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="page-visual follow-visual">
+        <div class="visual-tag"><span>FOLLOW / SUPPORT</span><span>THANK YOU</span></div>
+        <div class="emoji-stage" aria-hidden="true">
+          <span class="emoji emoji-one">🙏</span>
+          <span class="emoji emoji-two">👍</span>
+          <span class="emoji emoji-three">😭</span>
+          <span class="emoji emoji-four">💖</span>
+          <span class="emoji emoji-five">😀</span>
+          <span class="emoji emoji-six">✨</span>
+          <div class="emoji-message">点个关注和赞吧 · 谢谢支持</div>
+        </div>
+        <div class="follow-note">网站的运营成本不低，<br>在白嫖我，我就要流浪大街了😭</div>
+        <div class="follow-platforms" aria-hidden="true"><span>抖音</span><span>哔哩哔哩</span><span>快手</span></div>
+        <div class="dynamic-line">喜欢的话，点个关注吧。</div>
+      </div>
+    </div>
+
+    <div class="content" data-content="tools" data-title="工具随时可用。">
+      <div>
+        <div class="eyebrow">03 / TOOLS</div>
+        <h3>工具入口<br><span>随时可用。</span></h3>
+        <p>把常用的外部工具集中放在一个可扫描的工作区，需要时直接选择。</p>
+        <div class="link-grid">
+          <a class="action" href="https://47.242.128.61:8000/register?aff=8Txm8tR5" target="_blank" rel="noopener noreferrer"><span>魔戒.net</span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="action" href="https://romant.xyz/#/register?code=PxuRTVpg" target="_blank" rel="noopener noreferrer"><span>牛逼</span><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="page-visual tools-visual">
+        <div class="visual-tag"><span>TOOLS / STACK</span><span>02 ITEMS</span></div>
+        <div class="tool-stack">
+          <div class="tool-card"><b>01</b><strong>魔戒.net</strong><small>EXTERNAL</small></div>
+          <div class="tool-card"><b>02</b><strong>牛逼</strong><small>EXTERNAL</small></div>
+        </div>
+        <div class="dynamic-line">常用工具集中在这里。</div>
+      </div>
+    </div>
+
+    <div class="content" data-content="friendly" data-title="友链在这里。">
+      <div>
+        <div class="eyebrow">04 / FRIENDLY LINKS</div>
+        <h3>友链入口<br><span>保持连接。</span></h3>
+        <p>这里收录我的网站和朋友的网站，点击后在新窗口打开。</p>
+        <div class="link-grid">
+          <a class="action" href="https://blog.0y.hk/" target="_blank" rel="noopener noreferrer"><span>onlyfork依托小肥物</span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="action" href="https://sywinver.cn/" target="_blank" rel="noopener noreferrer"><span>我的新域名</span><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="page-visual friendly-visual">
+        <div class="visual-tag"><span>LINKS / NETWORK</span><span>CONNECTED</span></div>
+        <div class="friendly-map">
+          <div class="link-node"><b>01 / BLOG</b><strong>onlyfork</strong><small>依托小肥物</small></div>
+          <div class="link-node"><b>02 / DOMAIN</b><strong>sywinver.cn</strong><small>我的新域名</small></div>
+        </div>
+        <div class="dynamic-line">朋友的网站，也值得看看。</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="notice" id="notice" role="status" aria-live="polite" hidden>正在打开链接；如果没有打开，请检查浏览器是否拦截了新窗口。</div>
+
+<div class="modal" id="contactModal" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div class="dialog-top">
+      <div class="eyebrow">CONTACT / 05</div>
+      <button class="close" type="button" id="closeButton" aria-label="关闭联系窗口">✕</button>
+    </div>
+    <h2 id="contactTitle">联系我<span>.</span></h2>
+    <p>需要反馈、合作或资源说明？从下面的方式开始。</p>
+    <div class="contact-list">
+      <button class="contact" type="button" data-copy="cchyts@qq.com"><span class="contact-info"><small>EMAIL / 01</small>cchyts@qq.com</span><span class="copy-label" aria-live="polite">复制</span></button>
+      <button class="contact" type="button" data-copy="systemwinver@gmail.com"><span class="contact-info"><small>EMAIL / 02</small>systemwinver@gmail.com</span><span class="copy-label" aria-live="polite">复制</span></button>
+      <button class="contact" type="button" data-copy="2353724883"><span class="contact-info"><small>QQ / DIRECT</small>2353724883</span><span class="copy-label" aria-live="polite">复制</span></button>
+    </div>
   </div>
+</div>
 
-  <script>
-    (() => {
-      const pages = document.querySelectorAll('.page');
-      const navButtons = document.querySelectorAll('[data-page]');
-      const externalButtons = document.querySelectorAll('[data-external-url]');
-      const modal = document.getElementById('contactModal');
-      const contactButton = document.getElementById('contactButton');
-      const closeContactButton = document.getElementById('closeContactButton');
-      let lastFocusedElement = null;
+<footer><span>© 2026 SYSTEM-WIN-VER</span><span>ALL RIGHTS RESERVED / BUILD WITH INTENT</span></footer>
 
-      function showPage(pageId) {
-        const target = document.getElementById(pageId);
-        if (!target) return;
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-        pages.forEach((page) => {
-          page.hidden = page !== 
+  const sections = $$("[data-content]");
+  const ids = new Set(sections.map(s => s.dataset.content));
+  const navLinks = $$(".nav [data-section]");
+  const nav = $("#mainNav");
+  const menu = $(".menu");
+  const modal = $("#contactModal");
+  const notice = $("#notice");
+  const heroAction = $("#heroAction");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const scrollBehavior = () => (reduceMotion.matches ? "auto" : "smooth");
+
+  /* ---------- 文案 ---------- */
+  const heroCopy = {
+    home: { kicker: "SYS / RELEASE WORKBENCH", title: "把常用入口<br><em>放在手边。</em>", description: "SYSTEM-WIN-VER 是一个轻量、清晰、可验证的入口工作台。打开资源，检查链接，继续工作。", action: "查看 ISO 资源", href: "#iso" },
+    follow: { kicker: "01 / FOLLOW", title: "关注我<br><em>谢谢支持。</em>", description: "求关注和给视频点赞，网站的运营成本不低，在白嫖我，我就要流浪大街了😭", action: "去关注我的平台", href: "#follow" },
+    iso: { kicker: "02 / ISO RESOURCE", title: "获取 ISO<br><em>保持原链路。</em>", description: "ISO 下载地址保持原值不变，点击后在新窗口打开目标资源。", action: "打开 ISO 资源", href: "https://1851622828.share.123865.com/123pan/JK1Bvd-OOlb", external: true },
+    tools: { kicker: "03 / TOOLS", title: "工具入口<br><em>现在可用。</em>", description: "把常用的外部工具集中放在一个可扫描的工作区，需要时直接选择。", action: "浏览工具", href: "#tools" },
+    friendly: { kicker: "04 / FRIENDLY LINKS", title: "友链入口<br><em>保持连接。</em>", description: "这里收录我的网站和朋友的网站，点击后在新窗口打开。", action: "查看友链", href: "#friendly" }
+  };
+
+  const dynamicLines = {
+    home: ["入口已准备好。","今天也要把资源整理清楚。","从这里开始探索。","常用链接，全部放在手边。","找到需要的内容，再继续工作。","欢迎来到 SYSTEM-WIN-VER。","每一个入口都保持清晰。","少一点寻找，多一点效率。","资源、工具、友链都在这里。","先看看导航栏，还有更多页面。","页面不止一个，继续往下看看。","有需要的东西，慢慢找就好。","保持链接可用，也保持页面好看。","今天也要顺利完成你的任务。","从首页出发，去看看其他入口。"],
+    follow: ["喜欢的话，点个关注吧。","每一个点赞都会让我继续更新。","谢谢你的支持！","新视频会继续发布，记得回来看看。","如果内容帮到你，留个赞就好。","关注一下，后面还有更多内容。","你的支持，是我继续更新的动力。","别只路过，顺手点个关注吧。","看完觉得不错的话，帮忙转发一下。","每一次互动，我都会认真记住。","网站要运行，视频也要更新，拜托啦。","白嫖可以，至少给个点赞吧。","谢谢每一个愿意留下来的朋友。","下次更新见，记得别走丢。","关注、点赞、收藏，三连感谢！"],
+    iso: ["下载前建议先注册登录。","资源地址保持原链路。","需要时再回来取用。","ISO 文件适合提前准备。","下载前请确认剩余空间。","链接已经整理，按需使用即可。","资源页面会在新窗口打开。","先确认版本，再开始下载。","保持网络稳定，下载更顺利。","有需要就收藏这个入口。","下载完成后记得检查文件。","不要重复寻找，入口就在这里。","资源不变，链接保持清晰。","准备好之后，再开始你的安装。","遇到问题可以先回到这里。"],
+    tools: ["常用工具集中在这里。","选择需要的工具即可。","少一点寻找，多一点效率。","需要什么，直接点击对应入口。","把重复操作交给趁手的工具。","工具不多，但都放在这里。","先看清名称，再打开链接。","每个入口都有自己的用途。","让工作流程简单一点。","常用服务，随时可以回来。","不确定选哪个，就先看说明。","能省一步，就别多走一步。","把时间留给真正重要的事情。","工具页会继续慢慢补充。","找工具之前，先看看这里。"],
+    friendly: ["朋友的网站，也值得看看。","从这里认识更多站点。","感谢每一位支持我的人。","欢迎访问我的新域名。","看看别人的站点，也许会有收获。","友链不只是链接，也是一次认识。","常来看看，站点还会继续更新。","喜欢哪个网站，就进去逛逛吧。","每个链接，都通向不同的内容。","从一个页面，发现更多可能。","有空的话，去朋友的网站看看。","谢谢每一位交换友链的朋友。","新域名已经准备好，欢迎访问。","这里是我的小小网络地图。","别停在首页，友链里还有更多。"]
+  };
+
+  /* ---------- 轮播短句（只作用于当前可见的页面，标签页隐藏时暂停） ---------- */
+  let dynTimer = 0, dynFade = 0, activeId = null;
+  function startDynamic(id) {
+    clearInterval(dynTimer);
+    clearTimeout(dynFade);
+    const el = $(`.content[data-content="${id}"] .dynamic-line`);
+    const lines = dynamicLines[id];
+    if (!el || !lines) return;
+    let i = 1;
+    el.classList.remove("fade");
+    el.textContent = lines[0];
+    dynTimer = setInterval(() => {
+      if (document.hidden) return;
+      const next = lines[i];
+      i = (i + 1) % lines.length;
+      if (reduceMotion.matches) { el.textContent = next; return; }
+      el.classList.add("fade");
+      dynFade = setTimeout(() => { el.textContent = next; el.classList.remove("fade"); }, 280);
+    }, 3200);
+  }
+
+  /* ---------- 渲染 / 路由 ---------- */
+  const currentId = () => {
+    const h = location.hash.slice(1);
+    return ids.has(h) ? h : "home";
+  };
+
+  function render(id) {
+    const active = ids.has(id) ? id : "home";
+    const copy = heroCopy[active];
+    sections.forEach(s => s.classList.toggle("show", s.dataset.content === active));
+    navLinks.forEach(a => {
+      const on = a.dataset.section === active;
+      a.classList.toggle("active", on);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    $("#activeLabel").textContent = `ACTIVE / ${active.toUpperCase()}`;
+    $("#workspaceTitle").textContent = $(`.content[data-content="${active}"]`).dataset.title;
+    $("#heroKicker").textContent = copy.kicker;
+    $("#heroTitle").innerHTML = copy.title;
+    $("#heroDescription").textContent = copy.description;
+    $("#heroActionText").textContent = copy.action;
+    $("#heroActionArrow").textContent = copy.external ? "↗" : "→";
+    heroAction.setAttribute("href", copy.href);
+    if (copy.external) {
+      heroAction.setAttribute("target", "_blank");
+      heroAction.setAttribute("rel", "noopener noreferrer");
+    } else {
+      heroAction.removeAttribute("target");
+      heroAction.removeAttribute("rel");
+    }
+    if (active !== activeId) { activeId = active; startDynamic(active); }
+  }
+
+  function goTo(id) {
+    render(id);
+    if (location.hash !== `#${id}`) history.pushState({ section: id }, "", `#${id}`);
+    if (id === "home") window.scrollTo({ top: 0, behavior: scrollBehavior() });
+    else $(".workspace-head").scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+  }
+
+  window.addEventListener("hashchange", () => render(currentId()));
+  window.addEventListener("popstate", () => render(currentId()));
+
+  /* ---------- 导航菜单（手机） ---------- */
+  function setNav(open) {
+    nav.classList.toggle("open", open);
+    menu.setAttribute("aria-expanded", String(open));
+    menu.setAttribute("aria-label", open ? "关闭导航" : "打开导航");
+    menu.textContent = open ? "✕" : "☰";
+  }
+  menu.addEventListener("click", () => setNav(!nav.classList.contains("open")));
+  window.matchMedia("(min-width: 801px)").addEventListener("change", e => { if (e.matches) setNav(false); });
+
+  /* ---------- 全局点击：站内跳转 / 外链提示 / 点空白处关菜单 ---------- */
+  let noticeTimer = 0;
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a");
+    if (a) {
+      const href = a.getAttribute("href") || "";
+      if (href.startsWith("#") && ids.has(href.slice(1))) {
+        e.preventDefault();
+        goTo(href.slice(1));
+        setNav(false);
+        return;
+      }
+      if (a.target === "_blank") {
+        notice.hidden = false;
+        clearTimeout(noticeTimer);
+        noticeTimer = setTimeout(() => { notice.hidden = true; }, 3600);
+      }
+    }
+    if (nav.classList.contains("open") && !e.target.closest(".site-header")) setNav(false);
+  });
+
+  /* ---------- 联系弹窗 ---------- */
+  let lastFocus = null;
+  function openModal() {
+    lastFocus = document.activeElement;
+    setNav(false);
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    $("#closeButton").focus();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    const target = lastFocus && lastFocus.getClientRects().length ? lastFocus : menu;
+    target.focus({ preventScroll: true });
+  }
+  $("#contactButton").addEventListener("click", openModal);
+  $("#closeButton").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      if (!modal.hidden) closeModal();
+      else if (nav.classList.contains("open")) { setNav(false); menu.focus(); }
+      return;
+    }
+    if (e.key !== "Tab" || modal.hidden) return;
+    const f = $$("a[href],button", modal);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ---------- 复制（带旧浏览器 / 非 https 兜底） ---------- */
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (_) { /* fall through */ }
+    try {
+      const t = document.createElement("textarea");
+      t.value = text;
+      t.setAttribute("readonly", "");
+      t.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(t);
+      t.select();
+      t.setSelectionRange(0, text.length);
+      const ok = document.execCommand("copy");
+      t.remove();
+      return ok;
+    } catch (_) { return false; }
+  }
+  $$("[data-copy]").forEach(btn => {
+    const label = $(".copy-label", btn);
+    const idle = label.textContent;
+    let t = 0;
+    btn.addEventListener("click", async () => {
+      const ok = await copyText(btn.dataset.copy);
+      label.textContent = ok ? "已复制" : "请手动复制";
+      clearTimeout(t);
+      t = setTimeout(() => { label.textContent = idle; }, 1800);
+    });
+  });
+
+  render(currentId());
+})();
+</script>
+</body>
+</html>
